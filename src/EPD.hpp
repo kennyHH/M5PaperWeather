@@ -16,7 +16,7 @@
 */
 /**
   * @file EPD.h
-  * 
+  *
   * Helper functions for initialisizing and shutdown of the M5Paper.
   */
 #pragma once
@@ -26,8 +26,8 @@ void InitEPD(bool clearDisplay = true)
 {
    M5.begin(false, false, true, true, false);
    M5.RTC.begin();
-   
-   M5.EPD.SetRotation(0);
+
+   M5.EPD.SetRotation(180);
    M5.TP.SetRotation(0);
    if (clearDisplay) {
       M5.EPD.Clear(true);
@@ -36,20 +36,19 @@ void InitEPD(bool clearDisplay = true)
 //   disableCore0WDT();
 }
 
-/* 
- *  Shutdown the M5Paper 
+/*
+ *  Shutdown the M5Paper
  *  NOTE: the M5Paper could not shutdown while on usb connection.
  *        In this case use the esp_deep_sleep_start() function.
 */
 void ShutdownEPD(int sec)
 {
    Serial.println("Shutdown");
-/*
    M5.disableEPDPower();
    M5.disableEXTPower();
-   M5.disableMainPower();
-   esp_sleep_enable_timer_wakeup(sec * 1000000);
-   esp_deep_sleep_start();   
-*/   
-   M5.shutdown(sec);
+   esp_sleep_enable_timer_wakeup((uint64_t)sec * 1000000LL);
+   esp_sleep_enable_ext0_wakeup((gpio_num_t)M5EPD_KEY_PUSH_PIN, 0);
+   gpio_hold_en((gpio_num_t)M5EPD_MAIN_PWR_PIN);
+   gpio_deep_sleep_hold_en();
+   esp_deep_sleep_start();
 }
