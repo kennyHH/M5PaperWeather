@@ -16,12 +16,12 @@
 */
 /**
   * @file Data.h
-  * 
+  *
   * Class with all the global runtime data.
   */
 #pragma once
 
-#include "Weather.h"
+#include "Weather.hpp"
 #include <nvs.h>
 
 
@@ -41,7 +41,7 @@ public:
 
    time_t  moonRise;         //!< Calculated moon rise
    time_t  moonSet;          //!< Calculated moon set
-   
+
    Weather weather;          //!< All the openweathermap data
 
 public:
@@ -60,7 +60,7 @@ public:
    void Dump()
    {
       Serial.println("DateTime: "        + getRTCDateTimeString());
-      
+
       Serial.println("Latitude: "        + String(LATITUDE));
       Serial.println("Longitude: "       + String(LONGITUDE));
       Serial.println("WifiRSSI: "        + String(wifiRSSI));
@@ -70,7 +70,7 @@ public:
       Serial.println("Sht30Humidity: "   + String(sht30Humidity));
       Serial.println("MoonRise: "        + getDateTimeString(moonRise));
       Serial.println("MoonSet: "         + getDateTimeString(moonSet));
-      
+
       Serial.println("Sunrise: "         + getDateTimeString(weather.sunrise));
       Serial.println("Sunset: "          + getDateTimeString(weather.sunset));
       Serial.println("Winddir: "         + String(weather.winddir));
@@ -85,7 +85,7 @@ public:
       nvs_get_u16(nvs_arg, "nvsCounter", &nvsCounter);
       nvs_close(nvs_arg);
    }
-   
+
    /* Store the NVS data to the non volatile memory */
    void SaveNVS()
    {

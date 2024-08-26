@@ -16,23 +16,28 @@
 */
 /**
   * @file Weather.h
-  * 
+  *
   * Main file with setup() and loop()
   */
-  
+
 #include <M5EPD.h>
-#include "Config.h"
-#include "ConfigOverride.h" // Remove this line
-#include "Data.h"
-#include "Display.h"
-#include "Battery.h"
-#include "EPD.h"
-#include "EPDWifi.h"
-#include "Moon.h"
-#include "SHT30.h"
-#include "Time.h"
-#include "Utils.h"
-#include "Weather.h"
+#include "Config.hpp"
+//#include "ConfigOverride.hpp" // Remove this line
+#include "Data.hpp"
+
+//#include "Display_Bastelschlumpf.hpp"     // Original     v1      https://github.com/Bastelschlumpf/M5PaperWeather
+//#include "Display_mzyy94.hpp"             // Forked       v1.1    https://github.com/mzyy94/M5PaperWeather
+//#include "Display_Engineer.hpp"                      // My take
+#include "Display_Minimalist.hpp"
+
+#include "Battery.hpp"
+#include "EPD.hpp"
+#include "EPDWifi.hpp"
+#include "Moon.hpp"
+#include "SHT30.hpp"
+#include "Time.hpp"
+#include "Utils.hpp"
+#include "Weather.hpp"
 
 // Refresh the M5Paper info more often.
 // #define REFRESH_PARTLY 1
@@ -48,7 +53,6 @@ void setup()
    if (StartWiFi(myData.wifiRSSI)) {
       GetBatteryValues(myData);
       GetSHT30Values(myData);
-      GetMoonValues(myData);
       if (myData.weather.Get()) {
          SetRTCDateTime(myData);
       }
@@ -57,14 +61,13 @@ void setup()
       StopWiFi();
    }
    ShutdownEPD(60 * 60); // every 1 hour
-#else 
+#else
    myData.LoadNVS();
    if (myData.nvsCounter == 1) {
       InitEPD(true);
       if (StartWiFi(myData.wifiRSSI)) {
          GetBatteryValues(myData);
          GetSHT30Values(myData);
-         GetMoonValues(myData);
          if (myData.weather.Get()) {
             SetRTCDateTime(myData);
          }
@@ -75,15 +78,15 @@ void setup()
    } else {
       InitEPD(false);
       GetSHT30Values(myData);
-      myDisplay.ShowM5PaperInfo();
+      //myDisplay.ShowM5PaperInfo();
       if (myData.nvsCounter >= 60) {
          myData.nvsCounter = 0;
       }
    }
    myData.nvsCounter++;
    myData.SaveNVS();
-   ShutdownEPD(600); // 10 minute
-#endif // REFRESH_PARTLY   
+   ShutdownEPD(60); // 1 minute
+#endif // REFRESH_PARTLY
 }
 
 /* Main loop. Never reached because of shutdown */

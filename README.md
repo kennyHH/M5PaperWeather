@@ -1,30 +1,34 @@
+Originally forked from [https://github.com/Bastelschlumpf/M5PaperWeather](https://github.com/Bastelschlumpf/M5PaperWeather) and [https://github.com/mzyy94/M5PaperWeatherr](https://github.com/mzyy94/M5PaperWeather)
+
 
 ## M5PaperWeather
-  **M5Paper project with weather information from openweathermap ***
+My takes on that great project thanks to the original forks of forks, see above.
+- The librairies has been upgraded.
+- I’ve added two view and kept the two forked views and it’s simple two swap between them. Simply uncomment/comment the declaration inside the lines 28 to 31 in main.cpp
+- pio run -t upload
 
-   ![M5PaperWeather](images/M5PaperWeather.png "M5Paper")
+## Minimalist
+   ![M5PaperWeather](images/M5PaperWeather1836.jpg "M5Paper")
 
+## Engineer
+
+   ![M5PaperWeather](images/M5PaperWeather1843.jpg "M5Paper")
+
+## mzyy94
+
+   ![M5PaperWeather](images/M5PaperWeather1845.jpg "M5Paper")
+
+   ## Bastelschlumpf
+
+   ![M5PaperWeather](images/M5PaperWeather1848.jpg "M5Paper")
+
+Originally forked from [https://github.com/Bastelschlumpf/M5PaperWeather](https://github.com/Bastelschlumpf/M5PaperWeather) and [https://github.com/mzyy94/M5PaperWeatherr](https://github.com/mzyy94/M5PaperWeather)
 ### Description
-  Arduino project to show internal environment data and weather information from 
-  openweathermap https://openweathermap.org on the e-ink display of the M5Paper.
-  Please edit the config.h file with your own data.
+Shows internal environment data and weather information from openweathermap https://openweathermap.org on your magnificent M5Paper.
+  Please copy the **Config.hpp** file, rename it to ConfigOverride.hpp, and edit it with your own data.
   You need an api key from openweathermap.
-  The software shows the following information:
-  * A header with version, city wifi strength and battery status
-  * Sun section with sunrise and sunset 
-  * Moon section with moonrise and moonset
-  * Wind section with wind direction and wind speed
-  * The internal SH30 sensor data (temperature and humidity) with the current date and time
-  * A hourly forecast with hour, temperature and a weather icon.
-  * Some detailt forecast graphs with temperature, rain, humidity and pressure
 
-### Wall mount  
-   See https://www.thingiverse.com/thing:4767014
-   ![Wall mountr](images/WallMount.png "WallMount")
-
-### Disclaimer
-   I don't take any responsibility nor liability for using this software nor for the 
-   installation or any tips, advice, videos, etc. given by any member of this site or any related site.
+  The information will be updated every hour or manually by pressing a button _[NEW]_.
 
 ### License
    This program is licensed under GPL-3.0

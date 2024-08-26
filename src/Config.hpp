@@ -15,33 +15,22 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 /**
-  * @file Time.h
-  * 
-  * Helper function to set the internal RTC date and time.
+  * @file Config.h
+  *
+  * configuration information
   */
 #pragma once
 
-/* Set the internal RTC clock with the weather timestamp */
-bool SetRTCDateTime(MyData &myData)
-{
-   time_t time = myData.weather.currentTime;
+#define VERSION          "Version 2"
+#define CITY_NAME        "Quebec"
 
-   if (time > 0) {
-      rtc_time_t RTCtime;
-      rtc_date_t RTCDate;
-   
-      Serial.println("Epochtime: " + String(time));
-      
-      RTCDate.year = year(time);
-      RTCDate.mon  = month(time);
-      RTCDate.day  = day(time);
-      M5.RTC.setDate(&RTCDate);
-   
-      RTCtime.hour = hour(time);
-      RTCtime.min  = minute(time);
-      RTCtime.sec  = second(time);
-      M5.RTC.setTime(&RTCtime);
-      return true;
-   } 
-   return false;
-}
+// change to your location
+#define LATITUDE         46.813877
+#define LONGITUDE        -71.207977
+
+#define OPENWEATHER_SRV  "api.openweathermap.org"
+#define OPENWEATHER_PORT 80
+#define OPENWEATHER_API  "ec3a073fe3c335cf93f12198c43360ba"
+
+#define WIFI_SSID        "Rainbow"
+#define WIFI_PW          "over2double"
