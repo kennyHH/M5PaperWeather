@@ -3,6 +3,8 @@
 .fuse_hidden*
 
 ## Project files ######
+.vscode
+.pio
 .git
 .vs
 *.user
