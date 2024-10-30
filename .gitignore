@@ -1,11 +1,1 @@
-## OS specific ########
-.DS_Store
-.fuse_hidden*
-
-## Project files ######
-.vscode
-.pio
-.git
-.vs
-*.user
-tools
+src/config.hpp
