@@ -31,16 +31,18 @@ class WeatherDisplay
 {
 protected:
     MyData &myData;                //!< Reference to the global data
-    int     screen_width;         //!< Max width of the e-paper
-    int     screen_height;       //!< Max height of the e-paper
-    String  text_font            = "/FuturaBT_CondExtraBlackIt.ttf";
+    int     screen_width         = 960; //!< Max width of the e-paper
+    int     screen_height        = 540; //!< Max height of the e-paper
+    int     start_x              = -100; //!< Max width of the e-paper
+    int     start_y              = 0; //!< Max height of the e-paper
+    int     spacing              = 350; // Adjust this value to change spacing between digits
+    String  text_font            = "/FuturaBT_CondExtraBlackIt.ttf"; //FuturaBT_CondExtraBlackIt.ttf
     int     text_size            = 950;
     bool    interface_guide      = false;
 
 protected:
-    void DrawWeatherInfo(int x, int y, int dx, int dy);
+    void DrawWeatherInfo();
     void DrawBattery();
-    void DrawGuide(int divider, M5EPD_Canvas::grayscale_t color);
 
 public:
    WeatherDisplay(MyData &md, int x = 960, int y = 540)
@@ -55,7 +57,7 @@ public:
 
 
 /* Draw current weather information */
-void WeatherDisplay::DrawWeatherInfo(int x, int y, int dx, int dy)
+void WeatherDisplay::DrawWeatherInfo()
 {
     int temperature = static_cast<int>(std::round(myData.weather.feels_like));
     String tempStr = String(temperature);
@@ -64,20 +66,28 @@ void WeatherDisplay::DrawWeatherInfo(int x, int y, int dx, int dy)
 
     // Calculate positions for centering
     int totalWidth = canvas.textWidth(digit1) + canvas.textWidth(digit2);
-    int spacing = 350; // Adjust this value to change spacing between digits
-    int startX = x + (dx - totalWidth - spacing) / 2;
-    int centerY = y + dy / 2;
+
+    int startX = start_x + (screen_width - totalWidth - spacing) / 2;
+    int centerY = start_y + screen_height / 2;
 
     canvas.setTextDatum(TR_DATUM);
-    canvas.drawString("°", 1050, -200);
+    canvas.drawString("°", 1050, start_y + -200);
+    if (temperature < 0) {
+        canvas.setTextDatum(MC_DATUM);
+        canvas.drawString("-", startX-150, centerY);
+    }
     canvas.setTextDatum(MC_DATUM);
-    // Draw first digit
-    canvas.drawString(digit1, startX, centerY);
+
 
     // Draw second digit (if exists)
     if (digit2.length() > 0) {
+        // Draw first digit
+        canvas.drawString(digit1, startX, centerY);
         startX += canvas.textWidth(digit1) + spacing;
         canvas.drawString(digit2, startX, centerY);
+    } else {
+        // Draw first digit
+        canvas.drawString(digit1, start_x + 75 + (screen_width - totalWidth) / 2, centerY);
     }
 }
 
@@ -85,17 +95,7 @@ void WeatherDisplay::DrawWeatherInfo(int x, int y, int dx, int dy)
 /* Draw a the battery icon */
 void WeatherDisplay::DrawBattery()
 {
-    canvas.fillRect(0, 0, map(myData.batteryCapacity, 0, 100, 0, 960), 7, M5EPD_Canvas::G15);
-}
-
-
-/* Draw a the head with version, city, rssi and battery */
-void WeatherDisplay::DrawGuide(int divider, M5EPD_Canvas::grayscale_t color)
-{
-   for (int i = 1; i < divider; i++) {
-       canvas.drawLine((960/divider)*i, 0, (960/divider)*i, 540, color);
-       canvas.drawLine(0, (540/divider)*i, 960, (540/divider)*i, color);
-   }
+    canvas.fillRect(0, 0, map(myData.batteryCapacity, 0, 100, 0, 960), 14, M5EPD_Canvas::G15);
 }
 
 /* Main function to show all the data to the e-paper */
@@ -114,7 +114,7 @@ void WeatherDisplay::Show()
     canvas.setTextColor(WHITE);
     canvas.setTextDatum(MC_DATUM);
         DrawBattery();
-        DrawWeatherInfo(-75, 0, screen_width, screen_height);
+        DrawWeatherInfo();
     M5.EPD.SetColorReverse(true);
     canvas.pushCanvas(0, 0, UPDATE_MODE_GC16);
     delay(500);
