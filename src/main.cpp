@@ -27,8 +27,8 @@
 
 //#include "Display_Bastelschlumpf.hpp"     // Original     v1      https://github.com/Bastelschlumpf/M5PaperWeather
 //#include "Display_mzyy94.hpp"             // Forked       v1.1    https://github.com/mzyy94/M5PaperWeather
-//#include "Display_Engineer.hpp"                      // My take
-#include "Display_Minimalist.hpp"
+#include "Display_Engineer.hpp"                      // My take
+//#include "Display_Minimalist.hpp"
 
 #include "Battery.hpp"
 #include "EPD.hpp"
