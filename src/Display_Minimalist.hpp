@@ -24,7 +24,7 @@
 #include "Icons.hpp"
 
 
-M5EPD_Canvas canvas(&M5.EPD); // Main canvas of the e-paper
+M5EPD_Canvas canvas(&M5_EPD); // Main canvas of the e-paper
 
 /* Main class for drawing the content to the e-paper display. */
 class WeatherDisplay
@@ -115,7 +115,7 @@ void WeatherDisplay::Show()
     canvas.setTextDatum(MC_DATUM);
         DrawBattery();
         DrawWeatherInfo();
-    M5.EPD.SetColorReverse(true);
+    M5_EPD.SetColorReverse(true);
     canvas.pushCanvas(0, 0, UPDATE_MODE_GC16);
     delay(500);
 }
