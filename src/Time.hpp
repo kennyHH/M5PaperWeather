@@ -21,6 +21,7 @@
   */
 #pragma once
 #include "Data.hpp"
+#include "M5Compatibility.hpp"
 
 /* Set the internal RTC clock with the weather timestamp */
 bool SetRTCDateTime(MyData &myData)
@@ -34,14 +35,14 @@ bool SetRTCDateTime(MyData &myData)
       Serial.println("Epochtime: " + String(time));
       
       RTCDate.year = year(time);
-      RTCDate.mon  = month(time);
-      RTCDate.day  = day(time);
-      M5.RTC.setDate(&RTCDate);
+      RTCDate.RTC_FIELD_MON  = month(time);
+      RTCDate.RTC_FIELD_DAY  = day(time);
+      M5_RTC.setDate(&RTCDate);
    
-      RTCtime.hour = hour(time);
-      RTCtime.min  = minute(time);
-      RTCtime.sec  = second(time);
-      M5.RTC.setTime(&RTCtime);
+      RTCtime.RTC_FIELD_HOUR = hour(time);
+      RTCtime.RTC_FIELD_MIN  = minute(time);
+      RTCtime.RTC_FIELD_SEC  = second(time);
+      M5_RTC.setTime(&RTCtime);
       return true;
    } 
    return false;

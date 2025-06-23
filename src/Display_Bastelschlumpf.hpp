@@ -22,6 +22,7 @@
 #pragma once
 #include "Data.hpp"
 #include "Icons.hpp"
+#include "M5Compatibility.hpp"
 
 
 M5EPD_Canvas canvas(&M5_EPD); // Main canvas of the e-paper
@@ -193,7 +194,7 @@ void WeatherDisplay::DrawMoonInfo(int x, int y, int dx, int dy)
 {
    rtc_date_t date_struct;
 
-   M5.RTC.getDate(&date_struct);
+   M5_RTC.getDate(&date_struct);
 
    canvas.setTextSize(3);
    canvas.drawCentreString("Moon", x + dx / 2, y + 7, 1);

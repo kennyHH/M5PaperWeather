@@ -22,6 +22,7 @@
 #pragma once
 #include "Data.hpp"
 #include "Icons.hpp"
+#include "M5Compatibility.hpp"
 
 
 M5EPD_Canvas canvas(&M5_EPD); // Main canvas of the e-paper

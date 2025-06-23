@@ -30,7 +30,7 @@ void InitEPD(bool clearDisplay = true)
    M5.begin(cfg);
 #else
    M5.begin(false, false, true, true, false);
-   M5.RTC.begin();
+   M5_RTC.begin();
 #endif
 
 #ifdef USE_M5UNIFIED

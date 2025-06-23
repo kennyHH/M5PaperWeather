@@ -22,13 +22,14 @@
 #pragma once
 
 #include "Data.hpp"
+#include "M5Compatibility.hpp"
 
 /**
   * Read the battery voltage
   */
 bool GetBatteryValues(MyData &myData)
 {
-   uint32_t vol = M5.getBatteryVoltage();
+   uint32_t vol = getBatteryVoltage();
 
    if (vol < 3300) {
       vol = 3300;

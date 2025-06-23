@@ -21,6 +21,7 @@
   */
 #pragma once
 #include <TimeLib.h>
+#include "M5Compatibility.hpp"
 
 /* Convert the RTC date time to YYYY/MM/DD HH:MM:SS */
 String getRTCDateTimeString()
@@ -29,12 +30,12 @@ String getRTCDateTimeString()
    rtc_date_t date_struct;
    rtc_time_t time_struct;
 
-   M5.RTC.getDate(&date_struct);
-   M5.RTC.getTime(&time_struct);
+   M5_RTC.getDate(&date_struct);
+   M5_RTC.getTime(&time_struct);
 
    sprintf(buff,"%04d/%02d/%02d %02d:%02d:%02d",
-      date_struct.year, date_struct.mon, date_struct.day,
-      time_struct.hour, time_struct.min, time_struct.sec);
+      date_struct.year, date_struct.RTC_FIELD_MON, date_struct.RTC_FIELD_DAY,
+      time_struct.RTC_FIELD_HOUR, time_struct.RTC_FIELD_MIN, time_struct.RTC_FIELD_SEC);
 
    return (String) buff;
 }
@@ -46,15 +47,15 @@ time_t GetRTCTime()
   rtc_date_t   date_struct;
   rtc_time_t   time_struct;
 
-  M5.RTC.getDate(&date_struct);
-  M5.RTC.getTime(&time_struct);
+  M5_RTC.getDate(&date_struct);
+  M5_RTC.getTime(&time_struct);
 
   tmSet.Year   = date_struct.year - 1970;
-  tmSet.Month  = date_struct.mon;
-  tmSet.Day    = date_struct.day;
-  tmSet.Hour   = time_struct.hour;
-  tmSet.Minute = time_struct.min;
-  tmSet.Second = time_struct.sec;
+  tmSet.Month  = date_struct.RTC_FIELD_MON;
+  tmSet.Day    = date_struct.RTC_FIELD_DAY;
+  tmSet.Hour   = time_struct.RTC_FIELD_HOUR;
+  tmSet.Minute = time_struct.RTC_FIELD_MIN;
+  tmSet.Second = time_struct.RTC_FIELD_SEC;
 
   return makeTime(tmSet);
 }
@@ -65,10 +66,10 @@ String getRTCDateString()
    char       buff[32];
    rtc_date_t date_struct;
 
-   M5.RTC.getDate(&date_struct);
+   M5_RTC.getDate(&date_struct);
 
    sprintf(buff,"%04d/%02d/%02d",
-      date_struct.year, date_struct.mon, date_struct.day);
+      date_struct.year, date_struct.RTC_FIELD_MON, date_struct.RTC_FIELD_DAY);
 
    return (String) buff;
 }
@@ -79,10 +80,10 @@ String getRTCTimeString()
    char       buff[32];
    rtc_time_t time_struct;
 
-   M5.RTC.getTime(&time_struct);
+   M5_RTC.getTime(&time_struct);
 
    sprintf(buff,"%02d:%02d:%02d",
-      time_struct.hour, time_struct.min, time_struct.sec);
+      time_struct.RTC_FIELD_HOUR, time_struct.RTC_FIELD_MIN, time_struct.RTC_FIELD_SEC);
 
    return (String) buff;
 }

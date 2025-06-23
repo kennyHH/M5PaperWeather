@@ -21,10 +21,15 @@
   */
 #pragma once
 #include "Data.hpp"
+#include "M5Compatibility.hpp"
 
 /* Read the SHT30 environment chip data */
 bool GetSHT30Values(MyData &myData)
 {
+#ifdef USE_M5UNIFIED
+   // Environment sensor not available
+   return false;
+#else
    M5.SHT30.UpdateData();
    if(M5.SHT30.GetError() == 0) {
       myData.sht30Temperatur = (int) M5.SHT30.GetTemperature();
@@ -32,4 +37,5 @@ bool GetSHT30Values(MyData &myData)
       return true;
    }
    return false;
+#endif
 }
