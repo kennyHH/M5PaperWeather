@@ -20,18 +20,31 @@
   * Helper functions for initialisizing and shutdown of the M5Paper.
   */
 #pragma once
+#include "M5Compatibility.hpp"
 
 /* Initialize the M5Paper */
 void InitEPD(bool clearDisplay = true)
 {
+#ifdef USE_M5UNIFIED
+   auto cfg = M5.config();
+   M5.begin(cfg);
+#else
    M5.begin(false, false, true, true, false);
    M5.RTC.begin();
+#endif
 
-   M5.EPD.SetRotation(180);
+#ifdef USE_M5UNIFIED
+   M5.Display.setRotation(180);
+   if (clearDisplay) {
+      M5.Display.clear();
+   }
+#else
+   M5_EPD.SetRotation(180);
    M5.TP.SetRotation(0);
    if (clearDisplay) {
-      M5.EPD.Clear(true);
+      M5_EPD.Clear(true);
    }
+#endif
 
 //   disableCore0WDT();
 }
@@ -44,6 +57,11 @@ void InitEPD(bool clearDisplay = true)
 void ShutdownEPD(int sec)
 {
    Serial.println("Shutdown");
+#ifdef USE_M5UNIFIED
+   M5.Display.sleep();
+   esp_sleep_enable_timer_wakeup((uint64_t)sec * 1000000LL);
+   esp_deep_sleep_start();
+#else
    M5.disableEPDPower();
    M5.disableEXTPower();
    esp_sleep_enable_timer_wakeup((uint64_t)sec * 1000000LL);
@@ -51,4 +69,5 @@ void ShutdownEPD(int sec)
    gpio_hold_en((gpio_num_t)M5EPD_MAIN_PWR_PIN);
    gpio_deep_sleep_hold_en();
    esp_deep_sleep_start();
+#endif
 }

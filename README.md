@@ -3,7 +3,8 @@ Originally forked from [https://github.com/Bastelschlumpf/M5PaperWeather](https:
 
 ## M5PaperWeather
 My takes on that great project thanks to the original forks of forks, see above.
-- The librairies has been upgraded.
+- The libraries have been upgraded.
+- Added experimental support for **M5Paper S3** using `M5Unified` and `M5GFX`.
 - I’ve added two view and kept the two forked views and it’s simple two swap between them. Simply uncomment/comment the declaration inside the lines 28 to 31 in main.cpp
 - pio run -t upload
 

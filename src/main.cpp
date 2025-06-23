@@ -20,7 +20,7 @@
   * Main file with setup() and loop()
   */
 
-#include <M5EPD.h>
+#include "M5Compatibility.hpp"
 #include "Config.hpp"
 //#include "ConfigOverride.hpp" // Remove this line
 #include "Data.hpp"
